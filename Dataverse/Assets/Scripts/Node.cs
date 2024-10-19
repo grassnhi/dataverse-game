@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Node
 {
-    public int number;
-    public Vector2 worldPosition;
+    public Vector2Int coords;
     public bool walkable;
-    public Node(int num, Vector2 worldPos, bool _walkable) {
-        number = num;
-        worldPosition = worldPos;
-        walkable = _walkable;
+    public bool explored;
+    public bool path;
+    public Node connectTo;
+    public Node(Vector2Int coords, bool walkable)
+    {
+        this.coords = coords;
+        this.walkable = walkable;
     }
 }

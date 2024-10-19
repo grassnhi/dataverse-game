@@ -2,20 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[Serializable]
 public class SearchAlgorithms : MonoBehaviour
 {
-    // // Start is called before the first frame update
-    // void Start()
-    // {
-        
-    // }
+    public int[] numbers;
+    // private GetTarget target_obj;
+    public InputField myInput;
+    // Start is called before the first frame update
+    void Start()
+    {
+        // target_obj = GetComponent<GetTarget>();
+    }
 
     // // Update is called once per frame
     // void Update()
     // {
-        
+
     // }
 
     public int LinearSearch(int[] numbers, int target) 
@@ -68,5 +71,10 @@ public class SearchAlgorithms : MonoBehaviour
                 high = mid - 1;
         }
         return -1;
+    }
+
+    public void PrintResult() {
+        int target = int.Parse(myInput.text);
+        Debug.Log(target.ToString() + " at index: " + JumpSearch(numbers, target));
     }
 }
