@@ -18,6 +18,11 @@ public class GridManager : MonoBehaviour
             return grid;
         }
     }
+    public int MaxSize {
+        get {
+            return grid.Count;
+        }
+    }
     private void Awake()
     {
         CreateGrid();

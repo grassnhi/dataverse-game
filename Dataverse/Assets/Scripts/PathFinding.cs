@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,8 +26,9 @@ public class PathFinding : MonoBehaviour
     
     Queue<Node> frontier_BFS = new Queue<Node>();
     Stack<Node> frontier_DFS = new Stack<Node>();
+    Heap<Node> frontier_AStar;
     Dictionary<Vector2Int, Node> reached = new Dictionary<Vector2Int, Node>();
-    public bool useBFS = true;
+    public int mode = 1;
 
     GridManager gridManager;
     Dictionary<Vector2Int, Node> grid = new Dictionary<Vector2Int, Node>();
@@ -42,6 +44,7 @@ public class PathFinding : MonoBehaviour
         gridManager = FindObjectOfType<GridManager>();
         if (gridManager) {
             grid = gridManager.Grid;
+            frontier_AStar = new Heap<Node>(gridManager.MaxSize);
         }
     }
     public List<Node> GetNewPath() {
@@ -49,8 +52,9 @@ public class PathFinding : MonoBehaviour
     }
     public List<Node> GetNewPath(Vector2Int startCoords) {
         gridManager.ResetNodes();
-        if (useBFS) BreadthFirstSearch(startCoords);
-        else DepthFirstSearch(startCoords);
+        if (mode <= 1) BreadthFirstSearch(startCoords);     // mode = 1: bfs
+        else if (mode == 2) DepthFirstSearch(startCoords);  // mode = 2: dfs
+        else AStarSearch(startCoords);  // mode = 3: A-Star
         return BuildPath();
     }
     void BreadthFirstSearch(Vector2Int coords) {
@@ -63,12 +67,10 @@ public class PathFinding : MonoBehaviour
         bool isRunning = true;
 
         frontier_BFS.Enqueue(grid[coords]);
-        // frontier.Push(grid[coords]);
         reached.Add(coords, grid[coords]);
 
         while (frontier_BFS.Count > 0 && isRunning == true) {
             currentNode = frontier_BFS.Dequeue();
-            // currentNode = frontier.Pop();
             currentNode.explored = true;
             ExploreNeighbors_BFS();
             if (currentNode.coords == targetCoords) {
@@ -96,6 +98,49 @@ public class PathFinding : MonoBehaviour
             if (currentNode.coords == targetCoords) {
                 isRunning = false;
                 currentNode.walkable = false;
+            }
+        }
+    }
+    void AStarSearch(Vector2Int coords) {
+        startNode.walkable = true;
+        targetNode.walkable = true;
+        
+        frontier_AStar.Clear();
+        reached.Clear();
+
+        bool isRunning = true;
+
+        frontier_AStar.Add(grid[coords]);
+        reached.Add(coords, grid[coords]);
+
+        while (frontier_AStar.Count > 0 && isRunning == true) {
+            currentNode = frontier_AStar.RemoveFirst();
+            currentNode.explored = true;
+            ExploreNeighbors_AStar();
+            if (currentNode.coords == targetCoords) {
+                isRunning = false;
+                currentNode.walkable = false;
+            }
+        }
+    }
+    void ExploreNeighbors_AStar() {
+        List<Node> neighbors = new List<Node>();
+        foreach (Vector2Int direction in searchOrder) {
+            Vector2Int neighborCoords = currentNode.coords + direction;
+            if (grid.ContainsKey(neighborCoords)) {
+                neighbors.Add(grid[neighborCoords]);
+            }
+        }
+        foreach (Node neighbor in neighbors) {
+            if (!reached.ContainsKey(neighbor.coords) && neighbor.walkable) {
+                int newCost = currentNode.gCost + GetDistance(currentNode, neighbor);
+                if (newCost < neighbor.gCost || !frontier_AStar.Contains(neighbor)) {
+                    neighbor.gCost = newCost;
+                    neighbor.hCost = GetDistance(neighbor, targetNode);
+                    neighbor.connectTo = currentNode;
+                    reached.Add(neighbor.coords, neighbor);
+                    frontier_AStar.Add(neighbor);
+                }
             }
         }
     }
@@ -130,6 +175,11 @@ public class PathFinding : MonoBehaviour
                 frontier_DFS.Push(neighbor);
             }
         }
+    }
+    int GetDistance(Node node1, Node node2) {
+        int distX = (int)Mathf.Abs(node1.coords.x-node2.coords.x);
+        int distY = (int)Mathf.Abs(node1.coords.y-node2.coords.y);
+        return (int)Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
     }
     List<Node> BuildPath() {
         List<Node> path = new List<Node>();

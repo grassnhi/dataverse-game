@@ -373,6 +373,7 @@
 -analyzer:"D:/Unity Hub/2022.3.47f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"D:/Unity Hub/2022.3.47f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/GridManager.cs"
+"Assets/Scripts/Heap.cs"
 "Assets/Scripts/Labeller.cs"
 "Assets/Scripts/Node.cs"
 "Assets/Scripts/PathFinding.cs"
