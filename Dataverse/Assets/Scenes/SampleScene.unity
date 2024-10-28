@@ -1625,6 +1625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startCoords: {x: 0, y: 0}
   targetCoords: {x: 0, y: 0}
+  mode: 1
 --- !u!4 &1550341544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2648230476463101264, guid: 570c91958526fc84c9db09bf17ff472f, type: 3}
