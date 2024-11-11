@@ -8,6 +8,7 @@ TagManager:
   - Unit
   - PlayerName
   - PlayerLevel
+  - Warning
   layers:
   - Default
   - TransparentFX
