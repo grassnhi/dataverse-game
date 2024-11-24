@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Random Map.unity
     guid: 676807e6fbf26514eaf0aac733e6db0c
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: b7e6c29e1084b7941871a38c13682c06
   m_configObjects: {}

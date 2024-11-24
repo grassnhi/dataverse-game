@@ -9,6 +9,7 @@ TagManager:
   - PlayerName
   - PlayerLevel
   - Warning
+  - MainMenu
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -6,8 +7,10 @@ public class InputName : MonoBehaviour
 {
     [SerializeField] TMP_InputField name_input;
     public GameObject nameWarning;
+    string player_name;
+    // public static string player_name;
     public void AddName() {
-        string player_name = name_input.text;
+        player_name = name_input.text;
         if (player_name.Length == 0) {
             return;
         }
@@ -15,7 +18,7 @@ public class InputName : MonoBehaviour
         nameWarning.GetComponentsInChildren<TMP_Text>()[1].text = player_name;
     }
     public void AcceptName() {
-        Debug.Log("My name is " + name_input.text);
+        PlayerPrefs.SetString("PlayerName", player_name);
         SceneManager.LoadSceneAsync("Play Scene");
     }
     public void RefuseName() {
