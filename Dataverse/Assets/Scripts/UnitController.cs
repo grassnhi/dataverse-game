@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
+    public static int flag;
     [SerializeField] float movementSpeed = 1f;
     Transform selectedUnit;
     bool unitSelected = false;
@@ -23,8 +24,10 @@ public class UnitController : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             if (hit) {
+                flag = 1;
                 Debug.Log("Hit detected! " + hit.transform.tag);
                 if (hit.transform.CompareTag("Tile")) {
+                    flag = 2;
                     if (unitSelected) {
                         Vector2Int targetCoords = hit.transform.GetComponent<Labeller>().Coords;
                         if (gridManager.GetNode(targetCoords).walkable) {
