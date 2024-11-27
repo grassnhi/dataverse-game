@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadSceneAsync(sceneName);
     }
     public void QuitGame() {
-        PlayerPrefs.DeleteKey("PlayerName");
+        PlayerPrefs.DeleteAll();
         Debug.Log("Quit game!");
         Application.Quit(0);
     }

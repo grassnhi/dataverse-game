@@ -12,8 +12,9 @@ public class LevelsManager : MonoBehaviour
     void Awake() {
         if (PlayerPrefs.HasKey("UnlockedLevel") == false) {
             PlayerPrefs.SetInt("UnlockedLevel", 1);
+            // PlayerPrefs.Save();
         }
-        unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel");
+        unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
     }
     public void OpenLevel(int levelID) {
         if (levelID <= unlockedLevel) {

@@ -1686,7 +1686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   victoryBoard: {fileID: 944171780}
   failBoard: {fileID: 209562047}
-  currentLevel: 1
+  currentLevel: 3
 --- !u!1 &944171780
 GameObject:
   m_ObjectHideFlags: 0

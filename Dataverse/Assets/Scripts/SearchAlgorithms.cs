@@ -3,78 +3,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Linq;
 
 public class SearchAlgorithms : MonoBehaviour
 {
-    public int[] numbers;
-    // private GetTarget target_obj;
-    public InputField myInput;
-    // Start is called before the first frame update
+    int targetValue;
+    public int searchMode = 0;
+    int currentIndex = 0;
+    int clickedIndex = -1;
+    [SerializeField] GameObject itemset;
+    GameObject[] item_objs;
+    // bool isFound = false;
+    public static bool isComplete = false;
     void Start()
     {
-        // target_obj = GetComponent<GetTarget>();
-    }
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-
-    // }
-
-    public int LinearSearch(int[] numbers, int target) 
-    {
-        for (int i = 0; i < numbers.Length; i++) {
-            if (numbers[i] == target)
-                return i;
+        int numCols = ItemsManager.GridSize.y;
+        item_objs = new GameObject[numCols];
+        for (int i = 0; i < itemset.transform.childCount; i++) {
+            item_objs[i] = itemset.transform.GetChild(i).gameObject;
         }
-        return -1;
+        targetValue = int.Parse(GameObject.FindGameObjectWithTag("Target").GetComponentInChildren<TMP_Text>().text);
+        currentIndex = 0;
+        clickedIndex = -1;
+        Search();
     }
-
-    public int JumpSearch(int[] numbers, int target) 
-    {
-        int size = numbers.Length;
-        int step = (int)Math.Sqrt(size);
-        int prev = 0;
-        int curr = step;
-        while (numbers[curr - 1] < target) {
-            prev = curr;
-            curr += step;
-            if (curr > size) {
-                curr = size;
-            }
-            if (prev > size) {
-                return -1;
+    void Search() {
+        isComplete = false;
+        // isFound = false;
+        if (searchMode == 0) {
+            StartCoroutine(LinearSearch());
+        }
+        else if (searchMode == 1) {
+            StartCoroutine(BinarySearch());
+        }
+    }
+    IEnumerator LinearSearch() {
+        for (int i = 0; i < item_objs.Length; i++) {
+            currentIndex = i;
+            yield return new WaitUntil(CanContinue);
+            Debug.Log("OK");
+            // Debug.Log("Current: " + currentIndex.ToString() + "; clicked: " + clickedIndex.ToString());
+            int curr_num = int.Parse(item_objs[i].GetComponentInChildren<TMP_Text>().text);
+            if (curr_num == targetValue) {
+                // isFound = true;
+                break;
             }
         }
-        while (numbers[prev] < target) {
-            prev++;
-            if (prev == curr) {
-                return -1;
-            }
-        }
-        if (numbers[prev] == target) {
-            return prev;
-        }
-        return -1;
+        Debug.Log("COMPLETE");
+        isComplete = true;
     }
-
-    public int BinarySearch(int[] numbers, int target)
-    {
-        int low = 0, high = numbers.Length - 1;
+    IEnumerator BinarySearch() {
+        int low = 0, high = item_objs.Length - 1;
         while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (numbers[mid] == target)
-                return mid;
-            else if (numbers[mid] < target)
+            int mid = (low + high) / 2;
+            currentIndex = mid;
+            yield return new WaitUntil(CanContinue);
+            int curr_num = int.Parse(item_objs[mid].GetComponentInChildren<TMP_Text>().text);
+            if (curr_num == targetValue) {
+                // isFound = true;
+                break;
+            }
+            else if (curr_num < targetValue) {
                 low = mid + 1;
-            else
+            }
+            else {
                 high = mid - 1;
+            }
         }
-        return -1;
+        isComplete = true;
     }
-
-    public void PrintResult() {
-        int target = int.Parse(myInput.text);
-        Debug.Log(target.ToString() + " at index: " + JumpSearch(numbers, target));
+    bool CanContinue() {
+        return currentIndex == clickedIndex;
+    }
+    public void SendIndex(int idx) {
+        clickedIndex = idx;
+        if (CanContinue()) {
+            item_objs[idx].GetComponentInChildren<TMP_Text>().enabled = true;
+        }
+        else {
+            Level.health -= 1;
+        }
     }
 }

@@ -15,6 +15,7 @@ public class NameCacheManager : MonoBehaviour
             string name = PlayerPrefs.GetString("PlayerName");
             if (name == null || name == "") {
                 PlayerPrefs.DeleteKey("PlayerName");
+                PlayerPrefs.DeleteKey("PlayerCurrency");
                 SceneManager.LoadSceneAsync("New User");
                 return;
             }

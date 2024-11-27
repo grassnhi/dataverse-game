@@ -19,6 +19,9 @@ public class InputName : MonoBehaviour
     }
     public void AcceptName() {
         PlayerPrefs.SetString("PlayerName", player_name);
+        PlayerPrefs.SetInt("PlayerCurrency", 0);
+        PlayerPrefs.SetInt("PlayerLevel", 1);
+        // PlayerPrefs.Save();
         SceneManager.LoadSceneAsync("Play Scene");
     }
     public void RefuseName() {
