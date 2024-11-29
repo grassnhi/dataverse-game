@@ -14,7 +14,6 @@ public class SearchAlgorithms : MonoBehaviour
     int clickedIndex = -1;
     [SerializeField] GameObject itemset;
     GameObject[] item_objs;
-    // bool isFound = false;
     public static bool isComplete = false;
     void Start()
     {
@@ -30,7 +29,6 @@ public class SearchAlgorithms : MonoBehaviour
     }
     void Search() {
         isComplete = false;
-        // isFound = false;
         if (searchMode == 0) {
             StartCoroutine(LinearSearch());
         }
@@ -46,12 +44,12 @@ public class SearchAlgorithms : MonoBehaviour
             // Debug.Log("Current: " + currentIndex.ToString() + "; clicked: " + clickedIndex.ToString());
             int curr_num = int.Parse(item_objs[i].GetComponentInChildren<TMP_Text>().text);
             if (curr_num == targetValue) {
-                // isFound = true;
                 break;
             }
         }
         Debug.Log("COMPLETE");
         isComplete = true;
+        yield return new WaitForSeconds(0.5f);
     }
     IEnumerator BinarySearch() {
         int low = 0, high = item_objs.Length - 1;
@@ -72,6 +70,7 @@ public class SearchAlgorithms : MonoBehaviour
             }
         }
         isComplete = true;
+        yield return new WaitForSeconds(0.5f);
     }
     bool CanContinue() {
         return currentIndex == clickedIndex;

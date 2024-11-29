@@ -10,14 +10,16 @@ public class LevelsManager : MonoBehaviour
     public GameObject tooltip;
     int unlockedLevel;
     void Awake() {
-        if (PlayerPrefs.HasKey("UnlockedLevel") == false) {
-            PlayerPrefs.SetInt("UnlockedLevel", 1);
-            // PlayerPrefs.Save();
-        }
+        // if (PlayerPrefs.HasKey("UnlockedLevel") == false) {
+        //     PlayerPrefs.SetInt("UnlockedLevel", 1);
+        //     // PlayerPrefs.Save();
+        // }
         unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        Debug.Log(unlockedLevel);
     }
     public void OpenLevel(int levelID) {
         if (levelID <= unlockedLevel) {
+            Level.health = 3;
             string levelName = "Level " + levelID.ToString();
             SceneManager.LoadScene(levelName);
         }
