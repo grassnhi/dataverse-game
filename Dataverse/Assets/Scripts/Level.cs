@@ -15,20 +15,21 @@ public class Level : MonoBehaviour
     public GameObject failBoard;
     public int currentLevel;
     int unlockedLevel;
-    bool isFinal;
+    int isFinal;
     int[] levelScores = {250, 250, 300, 350, 350, 350, 350, 350};
     // static bool[] levelsDone = {false, false, false, false, false, false, false, false};
     void Awake() {
         victoryBoard.SetActive(false);
         failBoard.SetActive(false);
-        isFinal = false;
+        isFinal = PlayerPrefs.GetInt("IsFinal");
         unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
     }
     void LateUpdate() {
-        PopUp();
+        StartCoroutine(PopUp());
     }
-    void PopUp() {
-        if (health > 0 && SearchAlgorithms.isComplete && !isFinal) {
+    IEnumerator PopUp() {
+        yield return new WaitForSeconds(1.5f);
+        if (health > 0 && SearchAlgorithms.isComplete) {
             victoryBoard.SetActive(true);
             int tmp_score = PlayerPrefs.GetInt("PlayerCurrency");
             int levelScore = levelScores[currentLevel - 1];
@@ -37,22 +38,24 @@ public class Level : MonoBehaviour
                     child.gameObject.GetComponentInChildren<TMP_Text>().text = levelScore.ToString();
                 }
             }
-            if (currentLevel == unlockedLevel) {
+            if (currentLevel == unlockedLevel && isFinal == 0) {
                 tmp_score += levelScore;
                 Debug.Log("Add score");
             }
             PlayerPrefs.SetInt("PlayerCurrency", tmp_score);
+            Debug.Log(isFinal.ToString());
             if (unlockedLevel < MAX_LEVEL) {
                 if (currentLevel == unlockedLevel) {
                     unlockedLevel += 1;
                 }
             } else {
                 if (currentLevel == unlockedLevel) {
-                    isFinal = true;
+                    isFinal = 1;
                 }
             }
-            // Debug.Log(currentLevel.ToString() + " " + unlockedLevel.ToString());
-            PlayerPrefs.SetInt("UnlockedLevel", unlockedLevel);       
+            Debug.Log(currentLevel.ToString() + " " + unlockedLevel.ToString());
+            PlayerPrefs.SetInt("UnlockedLevel", unlockedLevel);
+            PlayerPrefs.SetInt("IsFinal", isFinal);    
             // PlayerPrefs.Save();
         }
         else if (health == 0 && !SearchAlgorithms.isComplete) {

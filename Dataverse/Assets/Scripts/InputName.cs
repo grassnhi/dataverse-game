@@ -22,6 +22,7 @@ public class InputName : MonoBehaviour
         PlayerPrefs.SetInt("PlayerCurrency", 0);
         PlayerPrefs.SetInt("PlayerLevel", 1);
         PlayerPrefs.SetInt("UnlockedLevel", 1);
+        PlayerPrefs.SetInt("IsFinal", 0);
         // PlayerPrefs.Save();
         SceneManager.LoadSceneAsync("Play Scene");
     }

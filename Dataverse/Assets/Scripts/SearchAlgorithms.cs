@@ -49,7 +49,7 @@ public class SearchAlgorithms : MonoBehaviour
         }
         Debug.Log("COMPLETE");
         isComplete = true;
-        yield return new WaitForSeconds(0.5f);
+        // yield return new WaitForSeconds(3f);
     }
     IEnumerator BinarySearch() {
         int low = 0, high = item_objs.Length - 1;
@@ -70,7 +70,7 @@ public class SearchAlgorithms : MonoBehaviour
             }
         }
         isComplete = true;
-        yield return new WaitForSeconds(0.5f);
+        // yield return new WaitForSeconds(3f);
     }
     bool CanContinue() {
         return currentIndex == clickedIndex;
