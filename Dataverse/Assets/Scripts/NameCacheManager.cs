@@ -31,7 +31,7 @@ public class NameCacheManager : MonoBehaviour
         SceneManager.LoadScene("Play Scene");
     }
     public void Reject() {
-        PlayerPrefs.DeleteKey("PlayerName");
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("New User");
     }
     public void Exit() {

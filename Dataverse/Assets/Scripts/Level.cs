@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
         victoryBoard.SetActive(false);
         failBoard.SetActive(false);
         isFinal = PlayerPrefs.GetInt("IsFinal");
-        unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel");
     }
     void LateUpdate() {
         StartCoroutine(PopUp());
@@ -43,7 +43,7 @@ public class Level : MonoBehaviour
                 Debug.Log("Add score");
             }
             PlayerPrefs.SetInt("PlayerCurrency", tmp_score);
-            Debug.Log(isFinal.ToString());
+            // Debug.Log(isFinal.ToString());
             if (unlockedLevel < MAX_LEVEL) {
                 if (currentLevel == unlockedLevel) {
                     unlockedLevel += 1;

@@ -4,8 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Tile
-  - Unit
   - PlayerName
   - PlayerLevel
   - Warning
@@ -14,6 +12,10 @@ TagManager:
   - Item
   - Target
   - LevelScore
+  - Algo
+  - Chaos
+  - CurrentSpeaker
+  - CurrentLine
   layers:
   - Default
   - TransparentFX

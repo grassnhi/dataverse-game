@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,40 +9,27 @@ public class Health : MonoBehaviour
     public int numOfHearts;
 
     public Image[] hearts;
-    public Sprite fullHeart;
-    public Sprite emptyHeart;
+    [SerializeField] Sprite fullHeart;
+    [SerializeField] Sprite emptyHeart;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Level.health > numOfHearts)
-        {
+    void Update() {
+        if (Level.health > numOfHearts) {
             Level.health = numOfHearts;
         }
 
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (i < Level.health)
-            {
+            if (i < Level.health) {
                 hearts[i].sprite = fullHeart;
             }
-            else 
-            {
+            else {
                 hearts[i].sprite = emptyHeart;
             }
 
-            if (i < numOfHearts)
-            {
+            if (i < numOfHearts) {
                 hearts[i].enabled = true;
             }
-            else
-            {
+            else {
                 hearts[i].enabled = false;
             }
         }

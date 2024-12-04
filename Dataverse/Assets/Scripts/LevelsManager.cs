@@ -14,7 +14,7 @@ public class LevelsManager : MonoBehaviour
         //     PlayerPrefs.SetInt("UnlockedLevel", 1);
         //     // PlayerPrefs.Save();
         // }
-        unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel");
         Debug.Log(unlockedLevel);
     }
     public void OpenLevel(int levelID) {
