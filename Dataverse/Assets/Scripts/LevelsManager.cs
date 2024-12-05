@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
 using System.Collections;
 
 public class LevelsManager : MonoBehaviour
@@ -10,16 +9,12 @@ public class LevelsManager : MonoBehaviour
     public GameObject tooltip;
     int unlockedLevel;
     void Awake() {
-        // if (PlayerPrefs.HasKey("UnlockedLevel") == false) {
-        //     PlayerPrefs.SetInt("UnlockedLevel", 1);
-        //     // PlayerPrefs.Save();
-        // }
         unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel");
-        Debug.Log(unlockedLevel);
     }
     public void OpenLevel(int levelID) {
         if (levelID <= unlockedLevel) {
             Level.health = 3;
+            Level.retryFlag = !(levelID == unlockedLevel);
             string levelName = "Level " + levelID.ToString();
             SceneManager.LoadScene(levelName);
         }

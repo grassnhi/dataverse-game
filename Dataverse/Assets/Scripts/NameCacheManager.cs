@@ -10,7 +10,6 @@ public class NameCacheManager : MonoBehaviour
         main_menuButtons = GameObject.FindGameObjectsWithTag("MainMenu");
     }
     public void GoToPlayScene() {
-        Debug.Log(PlayerPrefs.HasKey("PlayerName"));
         if (PlayerPrefs.HasKey("PlayerName")) {
             string name = PlayerPrefs.GetString("PlayerName");
             if (name == null || name == "") {
@@ -28,6 +27,7 @@ public class NameCacheManager : MonoBehaviour
         }
     }
     public void Accept() {
+        Level.retryFlag = true;
         SceneManager.LoadScene("Play Scene");
     }
     public void Reject() {

@@ -1,12 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 using UnityEngine.SceneManagement;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine.PlayerLoop;
 using System.Linq;
-using Microsoft.Unity.VisualStudio.Editor;
-using UnityEngine.UI;
 
 public class DialogController : MonoBehaviour
 {
@@ -19,12 +17,69 @@ public class DialogController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (Level.retryFlag == true) {
+            // Destroy(gameObject);
+            gameObject.SetActive(false);
+            return;
+        };
+        Setup();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Level.retryFlag == true) return;
+        // Debug.Log(currentLineIndex.ToString() + ", " + dialogLines.Count());
+        currentChar.text = dialogLines[currentLineIndex].Item1;
+        currentLine.text = dialogLines[currentLineIndex].Item2;
+        var img1 = charSprite1.GetComponent<UnityEngine.UI.Image>();
+        var img2 = charSprite2.GetComponent<UnityEngine.UI.Image>();
+        var tmpColor1 = img1.color;
+        var tmpColor2 = img2.color;
+        if (currentChar.text == "Algo") {
+            tmpColor1.a = 1f;
+            tmpColor2.a = 0.5f;
+        }
+        else if (currentChar.text == "Chaos") {
+            tmpColor1.a = 0.5f;
+            tmpColor2.a = 1f;
+        }
+        else {
+            tmpColor1.a = 0.5f;
+            tmpColor2.a = 0.5f;
+        }
+        img1.color = tmpColor1;
+        img2.color = tmpColor2;
+    }
+    public void ToNextLine() {
+        if (currentLineIndex + 1 == dialogLines.Count) {
+            Level.retryFlag = true;
+            // Destroy(gameObject);
+            gameObject.SetActive(false);
+        } else {
+            currentLineIndex += 1;
+        }
+    }
+    public void Rewatch() {
+        currentLineIndex = 0;
+        Level.retryFlag = false;
+        // Debug.Log(currentLineIndex.ToString() + ", " + dialogLines.Count());
+        gameObject.SetActive(true);
+        Setup();
+    }
+    void Setup() {
         currentChar = GameObject.FindGameObjectWithTag("CurrentSpeaker").GetComponent<TMP_Text>();
         currentLine = GameObject.FindGameObjectWithTag("CurrentLine").GetComponent<TMP_Text>();
         charSprite1 = GameObject.FindGameObjectWithTag("Algo");
         charSprite2 = GameObject.FindGameObjectWithTag("Chaos");
         string levelName = SceneManager.GetActiveScene().name;
-        if (levelName == "Level 1") {
+        if (levelName == "Main Story") {
+            dialogLines.Add(("Narrator", "The Dataverse—a sanctuary of information, now overshadowed by Chaos. This corrupted force scatters data into the void, challenging any who seek to restore balance."));
+            dialogLines.Add(("Chaos", "Order is a fragile illusion! Let the Dataverse crumble into entropy, its treasures scattered beyond reach."));
+            dialogLines.Add(("Chaos", "You, a mere speck, think you can defy me? Your efforts will only add to the chaos, little hero!"));
+            dialogLines.Add(("Algo", "I'll find every fragment you've hidden. I will restore balance, no matter the challenge!"));
+        }
+        else if (levelName == "Level 1") {
             dialogLines.Add(("Narrator", "In the Array Fields, Algo's journey begins. Before him lies a vast plain where data once flowed in perfect harmony, now shattered and thrown into utter disarray by Chaos."));
             dialogLines.Add(("Narrator", "Somewhere within this chaos lies a treasure—a vital fragment that will restore balance to the Array Fields."));
             dialogLines.Add(("Narrator", "To retrieve it, Algo must master the basics of searching, starting with the simplest, yet essential method: sequential search."));
@@ -32,7 +87,7 @@ public class DialogController : MonoBehaviour
             dialogLines.Add(("Algo", "I'll search every fragment if I have to. Order starts with understanding! Your chaos won't last forever."));
         }
         else if (levelName == "Level 2") {
-            dialogLines.Add(("Narrator", "Algo’s resolve grows stronger, but the journey ahead demands greater efficiency. The Array Fields stretch far and wide, concealing the next treasure in the distance."));
+            dialogLines.Add(("Narrator", "Algo's resolve grows stronger, but the journey ahead demands greater efficiency. The Array Fields stretch far and wide, concealing the next treasure in the distance."));
             dialogLines.Add(("Narrator", "To uncover it, Algo must leap through the data with precision, finding the balance between speed and accuracy."));
             dialogLines.Add(("Chaos", "Faster? Smarter? Ha! You'll only leap into failure. The Key of Sequence will remain hidden forever in my disarray!"));
             dialogLines.Add(("Algo", "I'll leap beyond your reach. Chaos has no defense against logic and order!"));
@@ -63,37 +118,5 @@ public class DialogController : MonoBehaviour
         //     dialogLines.Add(("Chaos", "Faster? Smarter? Ha! You'll only leap into failure. The Key of Sequence will remain hidden forever in my disarray!"));
         //     dialogLines.Add(("Algo", "I'll leap beyond your reach. Chaos has no defense against logic and order!"));
         // }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        currentChar.text = dialogLines[currentLineIndex].Item1;
-        currentLine.text = dialogLines[currentLineIndex].Item2;
-        var img1 = charSprite1.GetComponent<UnityEngine.UI.Image>();
-        var img2 = charSprite2.GetComponent<UnityEngine.UI.Image>();
-        var tmpColor1 = img1.color;
-        var tmpColor2 = img2.color;
-        if (currentChar.text == "Algo") {
-            tmpColor1.a = 1f;
-            tmpColor2.a = 0.5f;
-        }
-        else if (currentChar.text == "Chaos") {
-            tmpColor1.a = 0.5f;
-            tmpColor2.a = 1f;
-        }
-        else {
-            tmpColor1.a = 0.5f;
-            tmpColor2.a = 0.5f;
-        }
-        img1.color = tmpColor1;
-        img2.color = tmpColor2;
-    }
-    public void ToNextLine() {
-        if (currentLineIndex + 1 == dialogLines.Count) {
-            Destroy(gameObject);
-        } else {
-            currentLineIndex += 1;
-        }
     }
 }

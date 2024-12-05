@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +23,7 @@ public class InputName : MonoBehaviour
         PlayerPrefs.SetInt("UnlockedLevel", 1);
         PlayerPrefs.SetInt("IsFinal", 0);
         // PlayerPrefs.Save();
+        Level.retryFlag = false;
         SceneManager.LoadSceneAsync("Play Scene");
     }
     public void RefuseName() {
