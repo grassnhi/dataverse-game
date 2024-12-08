@@ -60,7 +60,7 @@ public class Level : MonoBehaviour
     }
     public void GoToNextLevel() {
         health = 3;
-        retryFlag = false;
+        retryFlag = currentLevel + 1 < unlockedLevel;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void Retry() {
