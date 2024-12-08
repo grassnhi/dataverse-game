@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.PlayerLoop;
 using System.Linq;
+using System.ComponentModel;
 
 public class DialogController : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class DialogController : MonoBehaviour
     void Awake()
     {
         if (Level.retryFlag == true) {
-            // Destroy(gameObject);
             gameObject.SetActive(false);
             return;
         };
@@ -29,7 +29,6 @@ public class DialogController : MonoBehaviour
     void Update()
     {
         if (Level.retryFlag == true) return;
-        // Debug.Log(currentLineIndex.ToString() + ", " + dialogLines.Count());
         currentChar.text = dialogLines[currentLineIndex].Item1;
         currentLine.text = dialogLines[currentLineIndex].Item2;
         var img1 = charSprite1.GetComponent<UnityEngine.UI.Image>();
@@ -54,8 +53,8 @@ public class DialogController : MonoBehaviour
     public void ToNextLine() {
         if (currentLineIndex + 1 == dialogLines.Count) {
             Level.retryFlag = true;
-            // Destroy(gameObject);
             gameObject.SetActive(false);
+            dialogLines.Clear();
         } else {
             currentLineIndex += 1;
         }
@@ -63,7 +62,6 @@ public class DialogController : MonoBehaviour
     public void Rewatch() {
         currentLineIndex = 0;
         Level.retryFlag = false;
-        // Debug.Log(currentLineIndex.ToString() + ", " + dialogLines.Count());
         gameObject.SetActive(true);
         Setup();
     }
