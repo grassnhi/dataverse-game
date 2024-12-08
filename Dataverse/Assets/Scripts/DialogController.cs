@@ -38,15 +38,15 @@ public class DialogController : MonoBehaviour
         var tmpColor2 = img2.color;
         if (currentChar.text == "Algo") {
             tmpColor1.a = 1f;
-            tmpColor2.a = 0.5f;
+            tmpColor2.a = 0f;
         }
         else if (currentChar.text == "Chaos") {
-            tmpColor1.a = 0.5f;
+            tmpColor1.a = 0f;
             tmpColor2.a = 1f;
         }
         else {
-            tmpColor1.a = 0.5f;
-            tmpColor2.a = 0.5f;
+            tmpColor1.a = 0f;
+            tmpColor2.a = 0f;
         }
         img1.color = tmpColor1;
         img2.color = tmpColor2;
@@ -74,6 +74,8 @@ public class DialogController : MonoBehaviour
         charSprite2 = GameObject.FindGameObjectWithTag("Chaos");
         string levelName = SceneManager.GetActiveScene().name;
         if (levelName == "Main Story") {
+            dialogLines.Add(("", "The Dataverse was once a realm of order, where data flowed efficiently. Young and curious, Algo thrived in this structured environment."));
+            dialogLines.Add(("", "However, a flawed system update birthed Chaos—a corrupt entity that distorts data, hides critical fragments, and thrives on disorder."));
             dialogLines.Add(("Narrator", "The Dataverse—a sanctuary of information, now overshadowed by Chaos. This corrupted force scatters data into the void, challenging any who seek to restore balance."));
             dialogLines.Add(("Chaos", "Order is a fragile illusion! Let the Dataverse crumble into entropy, its treasures scattered beyond reach."));
             dialogLines.Add(("Chaos", "You, a mere speck, think you can defy me? Your efforts will only add to the chaos, little hero!"));
