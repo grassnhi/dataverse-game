@@ -2,10 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.PlayerLoop;
-using System.Linq;
-using System.ComponentModel;
 
 public class DialogController : MonoBehaviour
 {
@@ -55,6 +51,15 @@ public class DialogController : MonoBehaviour
             Level.retryFlag = true;
             gameObject.SetActive(false);
             dialogLines.Clear();
+        } else {
+            currentLineIndex += 1;
+        }
+    }
+    public void ToNextLineEpilogue() {
+        if (currentLineIndex + 1 == dialogLines.Count) {
+            Level.retryFlag = true;
+            dialogLines.Clear();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         } else {
             currentLineIndex += 1;
         }
@@ -118,5 +123,18 @@ public class DialogController : MonoBehaviour
         //     dialogLines.Add(("Chaos", "Faster? Smarter? Ha! You'll only leap into failure. The Key of Sequence will remain hidden forever in my disarray!"));
         //     dialogLines.Add(("Algo", "I'll leap beyond your reach. Chaos has no defense against logic and order!"));
         // }
+        else if (levelName == "Epilogue") {
+            dialogLines.Add(("Narrator", "The journey has been long and perilous. From the disordered fields of arrays to the twisted trees, the tangled networks of graphs, and the broken vaults of hashes,"));
+            dialogLines.Add(("Narrator", "Algo has reclaimed the essence of order from the clutches of Chaos. Now, with all eight fragments in hand, the fate of the Dataverse lies in his grasp."));
+            dialogLines.Add(("Chaos", "You think you've won? You may have the fragments, but you lack the strength to wield them. The Dataverse is mine!"));
+            dialogLines.Add(("Algo", "No, Chaos. The Dataverse belongs to balance. It's not about control or destruction - it's about harmony."));
+            dialogLines.Add(("Narrator", "With the fragments reunited, the Core emits a powerful wave of order, purging Chaos from the Dataverse."));
+            dialogLines.Add(("Narrator", "The twisted landscapes unwind, data flows smoothly, and the once-broken systems realign to their proper forms"));
+            dialogLines.Add(("Narrator", "In restoring the fragments, Algo has done more than repair the Dataverse. He has proven that understanding, perseverance, and logic can overcome even the most insurmountable challenges"));
+            dialogLines.Add(("Algo", "The journey was never about the fragments—it was about learning to think clearly, to adapt, and to believe in the power of logic."));
+            dialogLines.Add(("Algo", "Chaos is a part of every system, but it's how we respond to it that defines us."));
+            dialogLines.Add(("Narrator", "And so, the Dataverse stands as a beacon of order amidst the tides of chaos, forever guarded by the logic and courage of its hero, Algo."));
+            dialogLines.Add(("Narrator", "His story is not just one of victory but of understanding - a lesson for all who seek clarity in a chaotic world."));
+        }
     }
 }
