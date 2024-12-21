@@ -1,11 +1,16 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ItemsManager : MonoBehaviour
 {
     static Vector2Int gridSize;
     Dictionary<Vector2Int, Item> grid = new Dictionary<Vector2Int, Item>();
+    [SerializeField] private GameObject hint_Object;
+    [SerializeField] private Button hintButton;
+    [SerializeField] private GameObject hintDialogue;
+    [SerializeField] private Button exitDialogueButton;
     GameObject[] item_objs;
     public int MaxSize {
         get {
@@ -17,8 +22,18 @@ public class ItemsManager : MonoBehaviour
             return gridSize;
         }
     }
+    private void Start()
+    {
+        hintDialogue.SetActive(false);
+    }
     void Awake() {
         CreateGrid();
+        hintButton.onClick.AddListener(() => {
+            hintDialogue.SetActive(true);
+        });
+        exitDialogueButton.onClick.AddListener(() => {
+            hintDialogue.SetActive(false);
+        });
     }
     void CreateGrid() {
         int numRows = 1;
@@ -41,6 +56,17 @@ public class ItemsManager : MonoBehaviour
                 grid.Add(coord, new Item(coord, itemVal));
                 Debug.Log(coord + ": " + itemVal);
             }
+        }
+    }
+    private void Update()
+    {
+        if (Level.health <= 2)
+        {
+            hint_Object.SetActive(true);
+        }
+        else
+        {
+            hint_Object.SetActive(false);
         }
     }
 }
