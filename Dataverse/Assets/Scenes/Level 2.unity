@@ -1218,7 +1218,7 @@ GameObject:
   - component: {fileID: 294770793}
   m_Layer: 5
   m_Name: DialogText
-  m_TagString: CurrentLine
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5083,7 +5083,7 @@ GameObject:
   - component: {fileID: 1745635212}
   m_Layer: 5
   m_Name: DialogChar
-  m_TagString: CurrentSpeaker
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

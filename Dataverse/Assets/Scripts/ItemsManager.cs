@@ -49,12 +49,10 @@ public class ItemsManager : MonoBehaviour
                 if (item_idx >= item_objs.Length) {
                     break;
                 }
-                // item_idx = gridSize.y - 1 - item_idx;
                 int itemVal = int.Parse(item_objs[item_idx].GetComponentInChildren<TMP_Text>().text);
                 item_objs[item_idx].GetComponentInChildren<TMP_Text>().enabled = false;
                 Vector2Int coord = new Vector2Int(x, y);
                 grid.Add(coord, new Item(coord, itemVal));
-                Debug.Log(coord + ": " + itemVal);
             }
         }
     }
